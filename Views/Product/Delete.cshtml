@@ -1,0 +1,94 @@
+﻿@model Products.Entities.Product
+
+@{
+    ViewData["Title"] = "Mahsulotni o'chirish";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> Mahsulotni o'chirish
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Diqqat!</strong> Siz ushbu mahsulotni butunlay o'chirmoqchisiz. Bu amalni bekor qilib bo'lmaydi.
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="text-danger mb-3">@Model.Name</h4>
+
+                            <dl class="row">
+                                <dt class="col-sm-3">ID:</dt>
+                                <dd class="col-sm-9">#@Model.Id</dd>
+
+                                <dt class="col-sm-3">Nomi:</dt>
+                                <dd class="col-sm-9"><strong>@Model.Name</strong></dd>
+
+                                <dt class="col-sm-3">Tavsif:</dt>
+                                <dd class="col-sm-9">
+                                    @if (!string.IsNullOrEmpty(Model.Description))
+                                    {
+                                        @Model.Description
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">Tavsif yo'q</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-3">Narx:</dt>
+                                <dd class="col-sm-9">
+                                    <span class="text-success">$@Model.Price.ToString("F2")</span>
+                                </dd>
+
+                                <dt class="col-sm-3">Soni:</dt>
+                                <dd class="col-sm-9">
+                                    @if (Model.Stock > 0)
+                                    {
+                                        <span class="badge bg-success">@Model.Stock ta</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning">Tugagan</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-3">Yaratilgan:</dt>
+                                <dd class="col-sm-9">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <form asp-action="Delete" method="post">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <a asp-action="Index" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left"></i> Bekor qilish
+                                </a>
+                                <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info ms-2">
+                                    <i class="fas fa-eye"></i> Ko'rish
+                                </a>
+                            </div>
+                            <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Rostdan ham bu mahsulotni o\'chirmoqchimisiz?')">
+                                <i class="fas fa-trash"></i> Ha, o'chirish
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+}

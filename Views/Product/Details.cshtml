@@ -1,0 +1,105 @@
+﻿@model Products.Entities.Product
+
+@{
+    ViewData["Title"] = "Mahsulot tafsilotlari";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-info-circle"></i> Mahsulot tafsilotlari
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="text-primary mb-3">@Model.Name</h4>
+
+                            <dl class="row">
+                                <dt class="col-sm-3">ID:</dt>
+                                <dd class="col-sm-9">
+                                    <span class="badge bg-secondary">#@Model.Id</span>
+                                </dd>
+
+                                <dt class="col-sm-3">Nomi:</dt>
+                                <dd class="col-sm-9">
+                                    <strong>@Model.Name</strong>
+                                </dd>
+
+                                <dt class="col-sm-3">Tavsif:</dt>
+                                <dd class="col-sm-9">
+                                    @if (!string.IsNullOrEmpty(Model.Description))
+                                    {
+                                        <p class="text-muted">@Model.Description</p>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">Tavsif kiritilmagan</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-3">Narx:</dt>
+                                <dd class="col-sm-9">
+                                    <span class="h5 text-success">
+                                        <i class="fas fa-dollar-sign"></i>@Model.Price.ToString("F2")
+                                    </span>
+                                </dd>
+
+                                <dt class="col-sm-3">Soni:</dt>
+                                <dd class="col-sm-9">
+                                    @if (Model.Stock > 0)
+                                    {
+                                        <span class="badge bg-success fs-6">@Model.Stock ta</span>
+                                        <small class="text-success ms-2">Mavjud</small>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger fs-6">Tugagan</span>
+                                        <small class="text-danger ms-2">Qoldiq yo'q</small>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-3">Yaratilgan:</dt>
+                                <dd class="col-sm-9">
+                                    <i class="fas fa-calendar-plus text-info"></i>
+                                    @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                </dd>
+
+                                <dt class="col-sm-3">Yangilangan:</dt>
+                                <dd class="col-sm-9">
+                                    <i class="fas fa-calendar-edit text-warning"></i>
+                                    @Model.UpdatedAt.ToString("dd/MM/yyyy HH:mm")
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Orqaga
+                            </a>
+                        </div>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Tahrirlash
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger ms-2">
+                                <i class="fas fa-trash"></i> O'chirish
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+}

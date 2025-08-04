@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Products.Entities.Product>
+
+@{
+    ViewData["Title"] = "Mahsulotlar";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Mahsulotlar ro'yxati</h2>
+                <a asp-action="Create" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Yangi mahsulot qo'shish
+                </a>
+            </div>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-body">
+                    @if (Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nomi</th>
+                                        <th>Tavsif</th>
+                                        <th>Narx</th>
+                                        <th>Soni</th>
+                                        <th>Yaratilgan sana</th>
+                                        <th>Amallar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var product in Model)
+                                    {
+                                        <tr>
+                                            <td>@product.Id</td>
+                                            <td><strong>@product.Name</strong></td>
+                                            <td>@(product.Description.Length > 50 ? product.Description.Substring(0, 50) + "..." : product.Description)</td>
+                                            <td><span class="badge bg-success">$@product.Price.ToString("F2")</span></td>
+                                            <td>
+                                                @if (product.Stock > 0)
+                                                {
+                                                    <span class="badge bg-primary">@product.Stock</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-warning">Tugagan</span>
+                                                }
+                                            </td>
+                                            <td>@product.CreatedAt.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a asp-action="Details" asp-route-id="@product.Id"
+                                                       class="btn btn-sm btn-outline-info" title="Ko'rish">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a asp-action="Edit" asp-route-id="@product.Id"
+                                                       class="btn btn-sm btn-outline-warning" title="Tahrirlash">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a asp-action="Delete" asp-route-id="@product.Id"
+                                                       class="btn btn-sm btn-outline-danger" title="O'chirish">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                            <h4 class="text-muted">Hech qanday mahsulot topilmadi</h4>
+                            <p class="text-muted">Birinchi mahsulotingizni qo'shish uchun yuqoridagi tugmani bosing</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+}
