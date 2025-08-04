@@ -1,0 +1,149 @@
+﻿@model Products.Models.Auth.RegisterDto
+
+@{
+    ViewData["Title"] = "Ro'yxatdan o'tish";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <i class="fas fa-user-plus auth-icon"></i>
+            <h2>Ro'yxatdan o'tish</h2>
+            <p class="text-muted">Yangi hisob yarating</p>
+        </div>
+
+        <div class="auth-body">
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="FirstName" class="form-label">
+                                <i class="fas fa-user me-1"></i> Ism *
+                            </label>
+                            <input asp-for="FirstName" class="form-control auth-input"
+                                   placeholder="Ismingizni kiriting" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="LastName" class="form-label">
+                                <i class="fas fa-user me-1"></i> Familiya *
+                            </label>
+                            <input asp-for="LastName" class="form-control auth-input"
+                                   placeholder="Familiyangizni kiriting" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">
+                        <i class="fas fa-envelope me-1"></i> Email *
+                    </label>
+                    <input asp-for="Email" class="form-control auth-input"
+                           placeholder="Email manzilingizni kiriting" autocomplete="username" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label">
+                        <i class="fas fa-lock me-1"></i> Parol *
+                    </label>
+                    <div class="input-group">
+                        <input asp-for="Password" class="form-control auth-input" type="password"
+                               placeholder="Parolingizni kiriting" autocomplete="new-password" />
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="form-text">
+                        <small>Parol kamida 6 ta belgidan iborat bo'lishi kerak</small>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label">
+                        <i class="fas fa-lock me-1"></i> Parolni tasdiqlang *
+                    </label>
+                    <div class="input-group">
+                        <input asp-for="ConfirmPassword" class="form-control auth-input" type="password"
+                               placeholder="Parolni qayta kiriting" autocomplete="new-password" />
+                        <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="agreeTerms" required />
+                        <label class="form-check-label" for="agreeTerms">
+                            <a href="#" class="auth-link">Foydalanish shartlari</a> va
+                            <a href="#" class="auth-link">Maxfiylik siyosati</a> bilan tanishdim va roziman
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-auth w-100 mb-3">
+                    <i class="fas fa-user-plus me-2"></i>
+                    Ro'yxatdan o'tish
+                </button>
+            </form>
+
+            <div class="auth-links">
+                <div class="text-center">
+                    <hr class="my-3">
+                    <p class="mb-0">
+                        Allaqachon hisobingiz bormi?
+                        <a asp-action="Login" class="auth-link fw-bold">
+                            <i class="fas fa-sign-in-alt me-1"></i>
+                            Tizimga kiring
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Password ko'rsatish/yashirish
+        function togglePasswordVisibility(inputId, buttonId) {
+            document.getElementById(buttonId).addEventListener('click', function() {
+                const passwordInput = document.getElementById(inputId);
+                const toggleIcon = this.querySelector('i');
+
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleIcon.classList.remove('fa-eye');
+                    toggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    toggleIcon.classList.remove('fa-eye-slash');
+                    toggleIcon.classList.add('fa-eye');
+                }
+            });
+        }
+
+        togglePasswordVisibility('Password', 'togglePassword');
+        togglePasswordVisibility('ConfirmPassword', 'toggleConfirmPassword');
+
+        // Real-time parol kuchi tekshirish
+        document.getElementById('Password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthMeter = document.getElementById('passwordStrength');
+
+            // Bu yerda parol kuchini tekshirish logikasini qo'shishingiz mumkin
+        });
+    </script>
+}

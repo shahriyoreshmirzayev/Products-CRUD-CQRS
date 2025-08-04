@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Ruxsat rad etildi";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card border-danger">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <i class="fas fa-exclamation-triangle text-danger" style="font-size: 4rem;"></i>
+                    </div>
+
+                    <h2 class="text-danger mb-3">Ruxsat rad etildi</h2>
+
+                    <p class="text-muted mb-4">
+                        Kechirasiz, sizda ushbu sahifaga kirish huquqi yo'q.
+                        Bu resursga kirish uchun tegishli ruxsatlar kerak.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="javascript:history.back()" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Orqaga
+                        </a>
+
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-primary">
+                            <i class="fas fa-home"></i> Bosh sahifa
+                        </a>
+
+                        <a asp-action="Login" class="btn btn-success">
+                            <i class="fas fa-sign-in-alt"></i> Qayta kirish
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
