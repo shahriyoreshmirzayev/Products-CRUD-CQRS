@@ -2,28 +2,27 @@
 using Microsoft.EntityFrameworkCore;
 using Products.Data;
 
-namespace Products.Features.Products.Commands.Handlers
+namespace Products.Features.Products.Commands.Handlers;
+
+public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, bool>
 {
-    public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, bool>
+    private readonly ApplicationDbContext _context;
+
+    public DeleteProductCommandHandler(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public DeleteProductCommandHandler(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+    public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    {
+        var product = await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
 
-        public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
-        {
-            var product = await _context.Products
-                .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
+        if (product == null)
+            return false;
 
-            if (product == null)
-                return false;
-
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync(cancellationToken);
-            return true;
-        }
+        _context.Products.Remove(product);
+        await _context.SaveChangesAsync(cancellationToken);
+        return true;
     }
 }
