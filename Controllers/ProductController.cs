@@ -18,14 +18,12 @@ public class ProductController : Controller
         _mediator = mediator;
     }
 
-    // GET: Product
     public async Task<IActionResult> Index()
     {
         var products = await _mediator.Send(new GetAllProductsQuery());
         return View(products);
     }
 
-    // GET: Product/Details/5
     public async Task<IActionResult> Details(int id)
     {
         if (id <= 0)
@@ -38,13 +36,11 @@ public class ProductController : Controller
         return View(product);
     }
 
-    // GET: Product/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: Product/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateProductDto productDto)
@@ -75,7 +71,6 @@ public class ProductController : Controller
         }
     }
 
-    // GET: Product/Edit/5
     public async Task<IActionResult> Edit(int id)
     {
         if (id <= 0)
@@ -97,7 +92,6 @@ public class ProductController : Controller
         return View(productDto);
     }
 
-    // POST: Product/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, UpdateProductDto productDto)
@@ -138,7 +132,6 @@ public class ProductController : Controller
         }
     }
 
-    // GET: Product/Delete/5
     public async Task<IActionResult> Delete(int id)
     {
         if (id <= 0)
@@ -151,7 +144,6 @@ public class ProductController : Controller
         return View(product);
     }
 
-    // POST: Product/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)

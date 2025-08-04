@@ -17,7 +17,6 @@ public class AuthController : Controller
         _mediator = mediator;
     }
 
-    // GET: Auth/Login
     [AllowAnonymous]
     public IActionResult Login(string? returnUrl = null)
     {
@@ -30,7 +29,6 @@ public class AuthController : Controller
         return View();
     }
 
-    // POST: Auth/Login
     [HttpPost]
     [AllowAnonymous]
     [ValidateAntiForgeryToken]
@@ -66,7 +64,6 @@ public class AuthController : Controller
             }
             else if (result.RequiresTwoFactor)
             {
-                // 2FA implementatsiyasi uchun
                 ModelState.AddModelError("", "Ikki bosqichli autentifikatsiya talab qilinadi.");
             }
             else
@@ -82,7 +79,6 @@ public class AuthController : Controller
         return View(model);
     }
 
-    // GET: Auth/Register
     [AllowAnonymous]
     public IActionResult Register()
     {
@@ -93,7 +89,6 @@ public class AuthController : Controller
         return View();
     }
 
-    // POST: Auth/Register
     [HttpPost]
     [AllowAnonymous]
     [ValidateAntiForgeryToken]
@@ -106,7 +101,6 @@ public class AuthController : Controller
 
         try
         {
-            // Email mavjudligini tekshirish
             var emailExists = await _mediator.Send(new CheckUserEmailExistsQuery { Email = model.Email });
             if (emailExists)
             {
@@ -143,7 +137,6 @@ public class AuthController : Controller
         return View(model);
     }
 
-    // POST: Auth/Logout
     [HttpPost]
     [Authorize]
     [ValidateAntiForgeryToken]
@@ -154,7 +147,6 @@ public class AuthController : Controller
         return RedirectToAction(nameof(Login));
     }
 
-    // GET: Auth/Profile
     [Authorize]
     public async Task<IActionResult> Profile()
     {
@@ -173,14 +165,12 @@ public class AuthController : Controller
         return View(userProfile);
     }
 
-    // GET: Auth/ChangePassword
     [Authorize]
     public IActionResult ChangePassword()
     {
         return View();
     }
 
-    // POST: Auth/ChangePassword
     [HttpPost]
     [Authorize]
     [ValidateAntiForgeryToken]
@@ -227,7 +217,6 @@ public class AuthController : Controller
         return View(model);
     }
 
-    // GET: Auth/AccessDenied
     [AllowAnonymous]
     public IActionResult AccessDenied()
     {
