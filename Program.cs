@@ -68,17 +68,16 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Product}/{action=Index}/{id?}");
 
-// Database yaratish va migration
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    // Database yaratish
+ 
     context.Database.EnsureCreated();
 
-    // Admin role yaratish
+
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
@@ -89,7 +88,7 @@ using (var scope = app.Services.CreateScope())
         await roleManager.CreateAsync(new IdentityRole("User"));
     }
 
-    // Admin user yaratish
+ 
     var adminEmail = "admin@productcqrs.com";
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
@@ -113,5 +112,4 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
-
 app.Run();
